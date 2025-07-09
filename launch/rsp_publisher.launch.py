@@ -22,7 +22,7 @@ def generate_launch_description():
     my_package_path = get_package_share_directory("master_server")
     xacro_file = os.path.join(my_package_path, 'urdf', 'dose_car.urdf.xacro')
 
-    for i in range(5):
+    for i in range(1):
         namespace_string = f"agv{i+1}"
         name_string = f"agv_{i+1}"
 
@@ -51,8 +51,23 @@ def generate_launch_description():
             respawn_delay=2.0
         )
 
+        jsp = Node(
+            package='joint_state_publisher',
+            executable='joint_state_publisher',
+            name='joint_state_publisher',
+            namespace=namespace_string,
+            output='screen',
+            parameters=[{
+                'use_sim_time': False,
+                'publish_frequency': 20.0,  # Ensure regular publishing
+            }],
+            respawn=True,
+            respawn_delay=2.0
+        )
+
 
         ld.add_action(rsp)
+        ld.add_action(jsp)
 
         time.sleep(1)
         
