@@ -12,7 +12,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(DIRECTORY
-        launch urdf
+        launch urdf config map
         DESTINATION share/${PROJECT_NAME}/
 )
 
